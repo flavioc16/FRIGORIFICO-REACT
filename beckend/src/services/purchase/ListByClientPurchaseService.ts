@@ -10,8 +10,9 @@ class ListByClientPurchaseService{
         const purchase = await prismaClient.purchase.findMany({
             where:{
                 client_id: client_id
-            }
-        })
+            },
+        });
+
         return purchase;
     }
 }

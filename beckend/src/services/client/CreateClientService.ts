@@ -5,36 +5,21 @@ interface ClientRequest{
     reference: string;
     address: string;
     telephone: string;
-    limit: string
+    limit: string;
+    user_id: string;
 }
 
 class CreateClientService{
-    async execute({ name, reference, address, telephone, limit }: ClientRequest){
+    async execute({ name, reference, address, telephone, limit, user_id }: ClientRequest){
 
         const nameAlreadyExist = await prismaClient.client.findFirst({
             where:{
-                name: name
+                user_id: user_id
             }
         })
 
-        if(!name){
-            throw new Error("Name incorrect")
-        }
-        if(!reference){
-            throw new Error("Reference incorrect")
-        }
-        if(!address){
-            throw new Error("Address incorrect")
-        }
-        if(!telephone){
-            throw new Error("Telephone incorrect")
-        }
-        if(!limit){
-            throw new Error("Limit incorrect")
-        }
-
         if(nameAlreadyExist){
-            throw new Error("Name already exists")
+            throw new Error("User already exists")
         }
         
         const client = await prismaClient.client.create({
@@ -43,7 +28,8 @@ class CreateClientService{
                 reference: reference,
                 address: address,
                 telephone: telephone,
-                limit: limit
+                limit: limit,
+                user_id: user_id
             },
             select:{
                 id: true,
@@ -51,7 +37,8 @@ class CreateClientService{
                 reference: true,
                 address: true,
                 telephone: true,
-                limit: true
+                limit: true,
+                user_id: true
             }
         })
 

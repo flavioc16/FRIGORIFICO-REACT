@@ -5,12 +5,12 @@ import { ListByClientPurchaseService } from "../../services/purchase/ListByClien
 class ListByClientPurchaseController{
     async handle(req: Request, res: Response){
 
-        const client_id = req.query.client_id as string;
+        const { client_id } = req.params;
 
         const listByClientPurchaseService = new ListByClientPurchaseService();
 
         const purchase = await listByClientPurchaseService.execute({
-            client_id
+            client_id: client_id
         });
 
         return res.json(purchase);

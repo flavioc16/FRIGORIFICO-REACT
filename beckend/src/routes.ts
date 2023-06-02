@@ -4,6 +4,8 @@ import {Router} from "express";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { AuthUserController } from "./controllers/user/AuthUserController";
 import { DetailUserController } from "./controllers/user/DetailUserController";
+import { ListAllUsersController } from "./controllers/user/ListAllUsersController";
+import { ListUserByIdController } from "./controllers/user/ListUserByIdController";
 
 //CONTROLLERS DE CLIENTES-CLIENTS
 import { CreateClientController } from "./controllers/client/CreateClientController";
@@ -31,13 +33,15 @@ const router = Router();
 //--ROTAS DE USUÁRIOS--USERS
 router.post('/users', new CreateUserController().handle)
 router.post('/session', new AuthUserController().handle)
+router.get('/users',  isAuthenticated, new ListAllUsersController().handle)
+router.get('/users/id',  isAuthenticated, new ListUserByIdController().handle)
 router.get('/me',  isAuthenticated, new DetailUserController().handle)
 
 //--ROTAS DE CLIENTES--CLIENTS
 router.post('/client', isAuthenticated, new CreateClientController().handle)
 router.get('/client', isAuthenticated, new ListClientsController().handle)
-router.get('/client/id', isAuthenticated, new ListClientByIdController().handle)
-router.get('/client/purchase/', isAuthenticated, new ListByClientPurchaseController().handle)
+router.get('/client/purchase/:client_id', isAuthenticated, new ListByClientPurchaseController().handle)
+router.get('/client/:id', isAuthenticated, new ListClientByIdController().handle)
 router.delete('/client', isAuthenticated, new RemoveClientController().handle)
 
 //--ROTAS DE COMPRAS--PURCHASES
@@ -46,7 +50,6 @@ router.get('/purchase', isAuthenticated, new ListAllPurchaseController().handle)
 router.get('/purchase/:id', isAuthenticated, new ListPurchaseController().handle)
 router.delete('/purchase', isAuthenticated, new RemovePurchaseController().handle)
 router.put('/purchase', isAuthenticated, new UpdatePurchaseController().handle)
-
 
 //--ROTAS DE PAGAMENTOS--PAYMENTS
 router.post('/payment', isAuthenticated, new CreatePaymentController().handle)
