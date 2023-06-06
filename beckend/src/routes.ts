@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 
 //CONTROLLERS DE USUÁRIOS-USERS
 import { CreateUserController } from "./controllers/user/CreateUserController";
@@ -33,7 +33,7 @@ const router = Router();
 //--ROTAS DE USUÁRIOS--USERS
 router.post('/users', new CreateUserController().handle)
 router.post('/session', new AuthUserController().handle)
-router.get('/users',  isAuthenticated, new ListAllUsersController().handle)
+router.get('/users', isAuthenticated, new ListAllUsersController().handle)
 router.get('/users/id',  isAuthenticated, new ListUserByIdController().handle)
 router.get('/me',  isAuthenticated, new DetailUserController().handle)
 
