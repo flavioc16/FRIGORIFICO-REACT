@@ -1,11 +1,16 @@
 
 import RoutesApp from "./routes"
+import './app.css';
+
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
 
   return (
     <div className="App">
-      <RoutesApp/>
+      <AuthProvider>
+        <RoutesApp/>
+      </AuthProvider>
     </div>
   )
 }
